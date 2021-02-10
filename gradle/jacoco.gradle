@@ -1,0 +1,29 @@
+apply plugin: "jacoco"
+
+jacoco {
+    toolVersion = "0.8.6"
+}
+
+jacocoTestReport {
+    group = "Reporting"
+    description = "Generate Jacoco coverage reports."
+
+    dependsOn jacocoTestCoverageVerification
+
+    reports {
+        html.enabled true
+        xml.enabled true
+        csv.enabled true
+        html.destination file("${buildDir}/reports/jacoco/")
+    }
+}
+
+jacocoTestCoverageVerification {
+    violationRules {
+        rule {
+            limit {
+                minimum = 0.0
+            }
+        }
+    }
+}

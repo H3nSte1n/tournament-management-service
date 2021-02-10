@@ -1,0 +1,159 @@
+openapi: 3.0.0
+info:
+  title: 'Tournament Management System API'
+  description: 'API for a tournament_management_system.'
+  contact:
+    name: Henry Steinhauer
+    email: Henrysteinhauer@t-online.de
+    url: https://github.com/H3nSte1n
+  version: '1.0.0'
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+security:
+  - bearerAuth: []
+
+paths:
+  /api/v1/tournaments:
+    get:
+      tags:
+        - Tournaments Administration
+      summary: Gets all Tournamentens
+      description: Get a list of all Tournaments. The list supports pagination.
+      parameters:
+        - in: query
+          name: pageSize
+          description: Tournaments per Page
+          schema:
+            type: integer
+        - name: pageNumber
+          in: query
+          description: Page number
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Returns the selected Tournament.
+          content:
+            application/json:
+              allOf:
+                - $ref: './components/tournaments.yml#definitions/Tournament'
+                - $ref: './components/tournaments.yml#definitions/Tournament--extended'
+        400:
+          $ref: './components/errors.yml#/components/responses/BadRequest'
+        401:
+          $ref: './components/errors.yml#/components/responses/Unauthorized'
+        500:
+          $ref: './components/errors.yml#/components/responses/InternalServerError'
+    post:
+      tags:
+        - Tournaments Administration
+      summary: Creates a Tournament
+      description: Adds a new Tournament to the Tournament list.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: './components/tournaments.yml#definitions/Tournament'
+      responses:
+        '201':
+          description: Create new Tournament
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: './components/tournaments.yml#definitions/Tournament'
+                  - $ref: './components/tournaments.yml#definitions/Tournament--extended'
+        400:
+          $ref: './components/errors.yml#/components/responses/BadRequest'
+        401:
+          $ref: './components/errors.yml#/components/responses/Unauthorized'
+        500:
+          $ref: './components/errors.yml#/components/responses/InternalServerError'
+  /api/v1/tournaments/{tournament_id}:
+    get:
+      tags:
+        - Tournaments Administration
+      summary: Gets a selected Tournament
+      description: Returns a single Tournament identified by id.
+      parameters:
+        - name: tournament_id
+          in: path
+          required: true
+          description: Tournament's id
+          type: number
+      responses:
+        '200':
+          description: Returns the selected Tournament.
+          content:
+            application/json:
+              schema:
+                $ref: './components/tournaments.yml#definitions/Tournament'
+        400:
+          $ref: './components/errors.yml#/components/responses/BadRequest'
+        401:
+          $ref: './components/errors.yml#/components/responses/Unauthorized'
+        500:
+          $ref: './components/errors.yml#/components/responses/InternalServerError'
+    delete:
+      tags:
+        - Tournaments Administration
+      summary: Remove a selected Tournament
+      description: Remove a single Tournament identified by id and return them.
+      parameters:
+        - name: tournament_id
+          in: path
+          required: true
+          description: Tournament's id
+          type: number
+      responses:
+        '204':
+          description: Returns the removed Tournament.
+          content:
+            application/json:
+              schema:
+                $ref: './components/tournaments.yml#definitions/RemovedTournaments'
+        400:
+          $ref: './components/errors.yml#/components/responses/BadRequest'
+        401:
+          $ref: './components/errors.yml#/components/responses/Unauthorized'
+        500:
+          $ref: './components/errors.yml#/components/responses/InternalServerError'
+    put:
+      tags:
+        - Tournaments Administration
+      summary: Update a selected Tournament
+      description: Update a single Tournament identified by id and return them.
+      parameters:
+        - name: tournament_id
+          in: path
+          required: true
+          description: Tournament's id
+          type: number
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: './components/tournaments.yml#definitions/Tournament'
+      responses:
+        '204':
+          description: return the updated Tournament
+          content:
+            application/json:
+              schema:
+                $ref: './components/tournaments.yml#definitions/Tournament'
+        400:
+          $ref: './components/errors.yml#/components/responses/BadRequest'
+        401:
+          $ref: './components/errors.yml#/components/responses/Unauthorized'
+        500:
+          $ref: './components/errors.yml#/components/responses/InternalServerError'
+
+
+
+

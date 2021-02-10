@@ -1,0 +1,34 @@
+definitions:
+  Tournaments:
+    type: array
+    items:
+      type: object
+      $ref: '#/definitions/Tournament'
+  Tournament:
+    description: Tournament
+    required:
+      - name,
+      - teamList,
+    properties:
+      name:
+        type: string
+      teamList:
+        type: array
+        items:
+          type: integer
+  Tournament--extended:
+    type: object
+    properties:
+      id:
+        type: Int
+        example: 1
+  RemovedTournaments:
+    description: Count of removed Tournaments
+    required:
+      - count
+    properties:
+      count:
+        type: integer
+
+
+
