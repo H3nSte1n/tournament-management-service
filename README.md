@@ -26,7 +26,7 @@
 - set following env variables
 
 
-[ci]: https://github.com/H3nSte1n/Tournaments-management-service/workflows/CI/badge.svg?style=flat
-[code-style]: https://github.com/H3nSte1n/Tournaments-management-service/workflows/Code-Style/badge.svg?style=flat
-[coverage]: https://github.com/H3nSte1n/Tournaments-management-service/blob/main/.github/badges/jacoco.svg
+[ci]: https://github.com/H3nSte1n/tournament-management-service/workflows/CI/badge.svg?style=flat
+[code-style]: https://github.com/H3nSte1n/tournament-management-service/workflows/Code-Style/badge.svg?style=flat
+[coverage]: https://github.com/H3nSte1n/tournament-management-service/blob/main/.github/badges/jacoco.svg
 
