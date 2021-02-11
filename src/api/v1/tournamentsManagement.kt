@@ -10,7 +10,7 @@ import io.ktor.routing.*
 import withRole
 
 fun Route.tournamentManagement() {
-    withRole {
+    withRole("admin") {
         delete("tournaments/{id}") {
             val tournamentId = call.parameters["id"]
             val removedTournament = TournamentsController.removeTournament(tournamentId!!.toInt())
@@ -22,6 +22,14 @@ fun Route.tournamentManagement() {
             call.respond(addedTournament)
             call.request.header("Authorization")
         }
+        put("tournaments/{id}") {
+            val tournamentId = call.parameters["id"]
+            val newTournamentsValues = call.receive<Tournament>()
+            val updatedTournament = TournamentsController.updateTournament(tournamentId!!.toInt(), newTournamentsValues)
+            call.respond(updatedTournament)
+        }
+    }
+    withRole("admin", "user") {
         get("tournaments") {
             val storedTournaments = TournamentsController.getAllTournaments()
             call.respond(storedTournaments)
@@ -30,12 +38,6 @@ fun Route.tournamentManagement() {
             val tournamentId = call.parameters["id"]
             val storedTournaments = TournamentsController.getTournament(tournamentId!!.toInt())
             call.respond(storedTournaments)
-        }
-        put("tournaments/{id}") {
-            val tournamentId = call.parameters["id"]
-            val newTournamentsValues = call.receive<Tournament>()
-            val updatedTournament = TournamentsController.updateTournament(tournamentId!!.toInt(), newTournamentsValues)
-            call.respond(updatedTournament)
         }
     }
 }
